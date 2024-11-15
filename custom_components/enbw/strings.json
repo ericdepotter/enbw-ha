@@ -1,0 +1,44 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "id": {
+            "name": "Id"
+          },
+          "api_key": "[%key:common::config_flow::data::api_key]"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "latitude": {
+        "name": "[%key:common::config_flow::data::latitude]"
+      },
+      "longitude": {
+        "name": "[%key:common::config_flow::data::longitude]"
+      },
+      "distance_to_home": {
+        "name": "Distance to home"
+      },
+      "total_charging_points": {
+        "name": "Total charging points"
+      },
+      "available_charging_points": {
+        "name": "Available charging points"
+      },
+      "state": {
+        "name": "State"
+      }
+    }
+  }
+}
