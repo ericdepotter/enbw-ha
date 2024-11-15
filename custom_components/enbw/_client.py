@@ -9,8 +9,10 @@ class ENBWAPIClient:
         self.api_key = None
         self.id = None
 
-    def login(self, id, api_key="d4954e8b2e444fc89a89a463788c0a72"):
-        self.api_key = api_key
+    def login(self, id, api_key):
+        self.api_key = (
+            api_key if api_key is not None else "d4954e8b2e444fc89a89a463788c0a72"
+        )
         self.id = id
 
         return self.get_charging_point_info()

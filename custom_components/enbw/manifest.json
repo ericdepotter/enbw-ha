@@ -1,16 +1,12 @@
 {
-  "domain": "enbw_charging_point",
-  "name": "ENBW Charging Point",
+  "domain": "enbw",
+  "name": "ENBW",
   "codeowners": [
     "@ericdepotter"
   ],
   "config_flow": true,
-  "dependencies": [],
   "documentation": "https://github.com/ericdepotter/enbw-ha",
-  "homekit": {},
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/ericdepotter/enbw-ha/issues",
-  "requirements": [],
-  "ssdp": [],
-  "zeroconf": []
+  "version": "1.0.0"
 }

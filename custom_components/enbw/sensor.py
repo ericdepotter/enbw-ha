@@ -19,7 +19,14 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
 import homeassistant.util.location as loc_util
 
-from .const import CONF_ENBW_COORDINATOR, DOMAIN
+from .const import (
+    ATTR_AVAILABLE,
+    ATTR_LATITUDE,
+    ATTR_LONGITUDE,
+    ATTR_TOTAL,
+    CONF_ENBW_COORDINATOR,
+    DOMAIN,
+)
 from .coordinator import (
     ENBWChargingPointCoordinatedEntity,
     ENBWChargingPointUpdateCoordinator,
@@ -36,48 +43,39 @@ class ENBWChargingPointSensorEntityDescription(SensorEntityDescription):
 
 SENSOR_TYPES: tuple[ENBWChargingPointSensorEntityDescription, ...] = (
     ENBWChargingPointSensorEntityDescription(
-        key="lat",
-        translation_key="latitude",
-        suggested_display_precision=0,
+        key="available_charging_points",
         state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda data, hass: data[ATTR_AVAILABLE],
     ),
     ENBWChargingPointSensorEntityDescription(
-        key="lon",
-        translation_key="longitude",
-        suggested_display_precision=0,
+        key="total_charging_points",
         state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda data, hass: data[ATTR_TOTAL],
+    ),
+    ENBWChargingPointSensorEntityDescription(
+        key="latitude",
+        suggested_display_precision=2,
+        state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda data, hass: data[ATTR_LATITUDE],
+    ),
+    ENBWChargingPointSensorEntityDescription(
+        key="longitude",
+        suggested_display_precision=2,
+        state_class=SensorStateClass.MEASUREMENT,
+        value_fn=lambda data, hass: data[ATTR_LONGITUDE],
     ),
     ENBWChargingPointSensorEntityDescription(
         key="distance_to_home",
-        translation_key="distance_to_home",
-        native_unit_of_measurement=UnitOfLength.KILOMETERS,
+        native_unit_of_measurement=UnitOfLength.METERS,
         device_class=SensorDeviceClass.DISTANCE,
-        suggested_display_precision=2,
+        suggested_display_precision=0,
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=lambda data, hass: loc_util.distance(
             hass.config.latitude,
             hass.config.longitude,
-            data["lat"],
-            data["lon"],
+            data[ATTR_LONGITUDE],
+            data[ATTR_LONGITUDE],
         ),
-    ),
-    ENBWChargingPointSensorEntityDescription(
-        key="numberOfChargePoints",
-        translation_key="total_charging_points",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    ENBWChargingPointSensorEntityDescription(
-        key="availableChargePoints",
-        translation_key="available_charging_points",
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    ENBWChargingPointSensorEntityDescription(
-        key="state",
-        translation_key="state",
-        state_class=SensorStateClass.MEASUREMENT,
-        value_fn=lambda data: "available"
-        if data["availableChargePoints"] > 0
-        else "unavailable",
     ),
 )
 
