@@ -87,8 +87,9 @@ class ENBWFlowHandler(ConfigFlow, domain=DOMAIN):
                 _LOGGER.exception("Unexpected exception")
                 errors["base"] = "unknown"
             else:
-                await self.async_set_unique_id(f"enbw-{info[CONF_ID]}")
-                return self.async_create_entry(title=info[CONF_ID], data=info)
+                title = f"enbw-{info[CONF_ID]}"
+                await self.async_set_unique_id(title)
+                return self.async_create_entry(title=title, data=info)
 
         return self.async_show_form(
             step_id="user",

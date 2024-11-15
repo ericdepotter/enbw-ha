@@ -1,5 +1,7 @@
 import requests
 
+from .const import ATTR_MANUFACTURER, ATTR_MODEL
+
 
 class ENBWAPIClient:
     def __init__(self) -> None:
@@ -9,13 +11,21 @@ class ENBWAPIClient:
         self.api_key = None
         self.id = None
 
+        self.model = None
+        self.operator = None
+
     def login(self, id, api_key):
         self.api_key = (
             api_key if api_key is not None else "d4954e8b2e444fc89a89a463788c0a72"
         )
         self.id = id
 
-        return self.get_charging_point_info()
+        data = self.get_charging_point_info()
+
+        self.model = data.get(ATTR_MODEL)
+        self.operator = data.get(ATTR_MANUFACTURER)
+
+        return data
 
     def get_charging_point_info(self):
         return self._get_endpoint(self.id)

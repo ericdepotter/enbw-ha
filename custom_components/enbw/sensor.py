@@ -54,13 +54,13 @@ SENSOR_TYPES: tuple[ENBWChargingPointSensorEntityDescription, ...] = (
     ),
     ENBWChargingPointSensorEntityDescription(
         key="latitude",
-        suggested_display_precision=2,
+        suggested_display_precision=4,
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=lambda data, hass: data[ATTR_LATITUDE],
     ),
     ENBWChargingPointSensorEntityDescription(
         key="longitude",
-        suggested_display_precision=2,
+        suggested_display_precision=4,
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=lambda data, hass: data[ATTR_LONGITUDE],
     ),
@@ -73,7 +73,7 @@ SENSOR_TYPES: tuple[ENBWChargingPointSensorEntityDescription, ...] = (
         value_fn=lambda data, hass: loc_util.distance(
             hass.config.latitude,
             hass.config.longitude,
-            data[ATTR_LONGITUDE],
+            data[ATTR_LATITUDE],
             data[ATTR_LONGITUDE],
         ),
     ),

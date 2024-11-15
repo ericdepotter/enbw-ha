@@ -35,7 +35,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     device = DeviceInfo(
         identifiers={(DOMAIN, entry.entry_id)},
         name=entry.title,
-        manufacturer=MANUFACTURER,
+        manufacturer=enbw_api.operator,
+        model=enbw_api.model,
     )
 
     enbw_coordinator = ENBWChargingPointUpdateCoordinator(hass, device, enbw_api)

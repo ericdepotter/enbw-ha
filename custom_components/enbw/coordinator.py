@@ -16,7 +16,7 @@ from homeassistant.helpers.update_coordinator import (
 )
 
 from ._client import ENBWAPIClient
-from .const import ATTRIBUTION, DOMAIN
+from .const import ATTR_MANUFACTURER, ATTR_MODEL, ATTRIBUTION, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,6 +47,9 @@ class ENBWChargingPointUpdateCoordinator(DataUpdateCoordinator):
                 enbw = await self.hass.async_add_executor_job(
                     self.enbw_api.get_charging_point_info
                 )
+                # can change over time, so we need to update it
+                self.device_info["manufacturer"] = enbw.get(ATTR_MANUFACTURER)
+                self.device_info["model"] = enbw.get(ATTR_MODEL)
                 _LOGGER.debug("ENBW data fetched: %s", enbw)
                 return enbw
         except HTTPError as http_err:
