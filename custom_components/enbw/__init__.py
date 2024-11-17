@@ -14,7 +14,6 @@ from .const import (
     CONF_API,
     CONF_ENBW_COORDINATOR,
     DOMAIN,
-    MANUFACTURER,
 )
 from .coordinator import ENBWChargingPointUpdateCoordinator
 
